@@ -21,18 +21,17 @@ int fibRecursion(int n)
     return fibRecursion(n-1)+fibRecursion(n-2);
 }
 
-int fibTopDown(int n, int dp[])
+int fibTopDownDP(int n, int dp[])
 {
     if(n==0 || n==1)
         return n;
-    //Lookup
     if(dp[n]!=0)
         return dp[n];
-    int ans = fibTopDown(n-1, dp) + fibTopDown(n-2, dp);
+    int ans = fibTopDownDP(n-1, dp) + fibTopDownDP(n-2, dp);
     return dp[n]=ans;
 }
 
-int fibBottomUp(int n)
+int fibBottomUpDP(int n)
 {
     int dp[100]={0};
     dp[1]=1;
@@ -41,7 +40,7 @@ int fibBottomUp(int n)
     return dp[n];
 }
 
-int fibBottomUpOpt(int n)
+int fibBottomUpOptDP(int n)
 {
     if(n==0 || n==1)
         return n;
@@ -60,8 +59,10 @@ int main()
     cout<<"**********Menu**********"<<endl;
     cout<<"1. Fibonacci Normal - Time:O(n) ; Space: O(1)"<<endl;
     cout<<"2. Fibonacci Recursion - Time:O(2^n) ; Space:O(n)"<<endl;
-    cout<<"2. Fibonacci Top Down DP - Time:O(2^n) ; Space:O(n)"<<endl;
-    cout<<"2. Fibonacci Bottom Up DP - Time:O(2^n) ; Space:O(n)"<<endl;
+    cout<<"3. Fibonacci Top Down DP - Time:O(n) ; Space:O(n)"<<endl;
+    cout<<"4. Fibonacci Bottom Up DP - Time:O(n) ; Space:O(n)"<<endl;
+    cout<<"5. Fibonacci Bottom Up DP Optimised - Time:O(n) ; Space:O(n)"<<endl<<endl;
+    cout<<"Enter your choice  : ";
     int ch;
     cin>>ch;
     switch(ch)
@@ -80,13 +81,20 @@ int main()
         case 3 :    {
                         int n;
                         cin>>n;
-                        cout<<fibTopDownDP(n)<<endl;
+                        int dp[100]={0};
+                        cout<<fibTopDownDP(n,dp)<<endl;
                         break;
                     }
         case 4 :    {
                         int n;
                         cin>>n;
                         cout<<fibBottomUpDP(n)<<endl;
+                        break;
+                    }
+        case 5 :    {
+                        int n;
+                        cin>>n;
+                        cout<<fibBottomUpOptDP(n)<<endl;
                         break;
                     }
         default :   {
