@@ -107,6 +107,23 @@ int fibMatrixOpt(int n)
 	return F[0][0];
 }
 
+const int MAX = 1000;
+int f[MAX] = {0};
+int fibRecurrenceRelation(int n)
+{
+	if (n == 0)
+		return 0;
+	if (n == 1 || n == 2)
+		return (f[n] = 1);
+	if (f[n])
+		return f[n];
+	int k = (n & 1)? (n+1)/2 : n/2;
+	f[n] = (n & 1)? (fibRecurrenceRelation(k)*fibRecurrenceRelation(k) +
+                  fibRecurrenceRelation(k-1)*fibRecurrenceRelation(k-1)) :
+                (2*fibRecurrenceRelation(k-1) + fibRecurrenceRelation(k))*fibRecurrenceRelation(k);
+	return f[n];
+}
+
 int fibFormula(int n)
 {
     double phi = (1 + sqrt(5)) / 2;
@@ -115,6 +132,7 @@ int fibFormula(int n)
 
 int main()
 {
+    //https://www.geeksforgeeks.org/program-for-nth-fibonacci-number/
     cout<<"**********Menu**********"<<endl;
     cout<<"1. Fibonacci Normal - Time:O(n) ; Space: O(1)"<<endl;
     cout<<"2. Fibonacci Recursion - Time:O(2^n) ; Space:O(n)"<<endl;
@@ -122,7 +140,10 @@ int main()
     cout<<"4. Fibonacci Bottom Up DP - Time:O(n) ; Space:O(n)"<<endl;
     cout<<"5. Fibonacci Bottom Up DP Optimized - Time:O(n) ; Space:O(1)"<<endl;
     cout<<"6. Fibonacci Using Matrix - Time:O(n) ; Space:O(1)"<<endl;
-    cout<<"7. Fibonacci Using Matrix Optimized - Time:O(log n) ; Space:O(1)"<<endl;
+    cout<<"7. Fibonacci Using Matrix Optimized - Time:O(log n) ; Space:O(log n)"<<endl;
+    cout<<"8. Fibonacci Using Matrix New Recurrence Relation - Time:O(log n) ; Space:O(log n)"<<endl;
+    cout<<"9. Fibonacci Using Matrix Formula - Time:O(1) ; Space:O(1)"<<endl;
+    cout<<"10. Fibonacci Using Matrix Optimized - Time:O(log n) ; Space:O(log n)"<<endl;
     cout<<endl<<"Enter your choice  : ";
     int ch;
     cin>>ch;
@@ -171,6 +192,18 @@ int main()
                         break;
                     }
         case 8 :    {
+                        int n;
+                        cin>>n;
+                        cout<<fibRecurrenceRelation(n)<<endl;
+                        break;
+                    }
+        case 9 :    {
+                        int n;
+                        cin>>n;
+                        cout<<fibFormula(n)<<endl;
+                        break;
+                    }
+        case 10 :    {
                         int n;
                         cin>>n;
                         cout<<fibFormula(n)<<endl;
