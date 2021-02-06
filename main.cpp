@@ -54,6 +54,65 @@ int fibBottomUpOptDP(int n)
     return c;
 }
 
+int fibMatrix(int n)
+{
+	int F[2][2] = {{1,1},{1,0}};
+	if (n == 0 || n==1)
+		return n;
+	int i;
+	int M[2][2] = {{1,1},{1,0}};
+	for(i=2;i<n;i++)
+	{
+        int x = F[0][0] * M[0][0] + F[0][1] * M[1][0];
+        int y = F[0][0] * M[0][1] + F[0][1] * M[1][1];
+        int z = F[1][0] * M[0][0] + F[1][1] * M[1][0];
+        int w = F[1][0] * M[0][1] + F[1][1] * M[1][1];
+        F[0][0] = x;
+        F[0][1] = y;
+        F[1][0] = z;
+        F[1][1] = w;
+    }
+	return F[0][0];
+}
+
+void multiply(int F[2][2], int M[2][2])
+{
+	int x = F[0][0] * M[0][0] + F[0][1] * M[1][0];
+	int y = F[0][0] * M[0][1] + F[0][1] * M[1][1];
+	int z = F[1][0] * M[0][0] + F[1][1] * M[1][0];
+	int w = F[1][0] * M[0][1] + F[1][1] * M[1][1];
+	F[0][0] = x;
+	F[0][1] = y;
+	F[1][0] = z;
+	F[1][1] = w;
+}
+
+void power(int F[2][2], int n)
+{
+	if(n == 0 || n == 1)
+	    return;
+	int M[2][2] = {{1, 1},{1, 0}};
+	power(F, n / 2);
+	multiply(F, F);
+	if (n % 2 != 0)
+		multiply(F, M);
+}
+
+int fibMatrixOpt(int n)
+{
+	int F[2][2] = {{1, 1},{1, 0}};
+	if (n == 0)
+		return 0;
+	power(F, n - 1);
+	return F[0][0];
+}
+
+int fibFormula(int n)
+{
+    double phi = (1 + sqrt(5)) / 2;
+    return round(pow(phi, n) / sqrt(5));
+}
+
 int main()
 {
     cout<<"**********Menu**********"<<endl;
@@ -61,8 +120,10 @@ int main()
     cout<<"2. Fibonacci Recursion - Time:O(2^n) ; Space:O(n)"<<endl;
     cout<<"3. Fibonacci Top Down DP - Time:O(n) ; Space:O(n)"<<endl;
     cout<<"4. Fibonacci Bottom Up DP - Time:O(n) ; Space:O(n)"<<endl;
-    cout<<"5. Fibonacci Bottom Up DP Optimised - Time:O(n) ; Space:O(n)"<<endl<<endl;
-    cout<<"Enter your choice  : ";
+    cout<<"5. Fibonacci Bottom Up DP Optimized - Time:O(n) ; Space:O(1)"<<endl;
+    cout<<"6. Fibonacci Using Matrix - Time:O(n) ; Space:O(1)"<<endl;
+    cout<<"7. Fibonacci Using Matrix Optimized - Time:O(log n) ; Space:O(1)"<<endl;
+    cout<<endl<<"Enter your choice  : ";
     int ch;
     cin>>ch;
     switch(ch)
@@ -95,6 +156,24 @@ int main()
                         int n;
                         cin>>n;
                         cout<<fibBottomUpOptDP(n)<<endl;
+                        break;
+                    }
+        case 6 :    {
+                        int n;
+                        cin>>n;
+                        cout<<fibMatrix(n)<<endl;
+                        break;
+                    }
+        case 7 :    {
+                        int n;
+                        cin>>n;
+                        cout<<fibMatrixOpt(n)<<endl;
+                        break;
+                    }
+        case 8 :    {
+                        int n;
+                        cin>>n;
+                        cout<<fibFormula(n)<<endl;
                         break;
                     }
         default :   {
