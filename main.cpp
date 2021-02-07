@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
+const int MAX = 1000;
+int f[MAX] = {0};
 
 int fib(int n)
 {
@@ -59,9 +61,8 @@ int fibMatrix(int n)
 	int F[2][2] = {{1,1},{1,0}};
 	if (n == 0 || n==1)
 		return n;
-	int i;
 	int M[2][2] = {{1,1},{1,0}};
-	for(i=2;i<n;i++)
+	for(int i=2;i<n;i++)
 	{
         int x = F[0][0] * M[0][0] + F[0][1] * M[1][0];
         int y = F[0][0] * M[0][1] + F[0][1] * M[1][1];
@@ -107,8 +108,6 @@ int fibMatrixOpt(int n)
 	return F[0][0];
 }
 
-const int MAX = 1000;
-int f[MAX] = {0};
 int fibRecurrenceRelation(int n)
 {
 	if (n == 0)
@@ -130,6 +129,15 @@ int fibFormula(int n)
     return round(pow(phi, n) / sqrt(5));
 }
 
+int fibMatrixExp(int n)
+{
+	int F[2][2] = {{1, 1},{1, 0}};
+	if (n == 0)
+		return 0;
+	power(F, n - 1);
+	return F[0][0];
+}
+
 int main()
 {
     //https://www.geeksforgeeks.org/program-for-nth-fibonacci-number/
@@ -141,9 +149,9 @@ int main()
     cout<<"5. Fibonacci Bottom Up DP Optimized - Time:O(n) ; Space:O(1)"<<endl;
     cout<<"6. Fibonacci Using Matrix - Time:O(n) ; Space:O(1)"<<endl;
     cout<<"7. Fibonacci Using Matrix Optimized - Time:O(log n) ; Space:O(log n)"<<endl;
-    cout<<"8. Fibonacci Using Matrix New Recurrence Relation - Time:O(log n) ; Space:O(log n)"<<endl;
+    cout<<"8. Fibonacci Using Matrix New Recurrence Relation - Time:O(log n) ; Space:O(n)"<<endl;
     cout<<"9. Fibonacci Using Matrix Formula - Time:O(1) ; Space:O(1)"<<endl;
-    cout<<"10. Fibonacci Using Matrix Optimized - Time:O(log n) ; Space:O(log n)"<<endl;
+    cout<<"10. Fibonacci Matrix Exponentiation - Time:O(log n) ; Space:O(log n)"<<endl;
     cout<<endl<<"Enter your choice  : ";
     int ch;
     cin>>ch;
@@ -206,7 +214,7 @@ int main()
         case 10 :    {
                         int n;
                         cin>>n;
-                        cout<<fibFormula(n)<<endl;
+                        cout<<fibMatrixExp(n)<<endl;
                         break;
                     }
         default :   {
